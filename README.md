@@ -1,6 +1,8 @@
 # AirBnB Clone - The Console
 The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
 
+![image](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2020/9/02078cd7f0573885c85a225c7436584a5afea1f9.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOU5BHMTQX4%2F20220519%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220519T070536Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=81064e0ad3c060ebe2b0ae50bfe01f475fbfb16656f6bfea2fcddca314abec3a)
+
 #### Functionalities of this command interpreter:
 * Create a new object (ex: a new User or a new Place)
 * Retrieve an object from a file, a database etc...
@@ -156,6 +158,9 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Rémi Marçais - [Github](https://github.com/rmarcais) / [LinkedIn](https://www.linkedin.com/in/remi-marcais/)
+Elodie Riou - [Github](https://github.com/elodieriou) / [LinkedIn](https://www.linkedin.com/in/elodieriou-dev/)
+
 
 Second part of Airbnb: Joann Vuong
 ## License
