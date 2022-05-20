@@ -75,3 +75,8 @@ def put_city(city_id):
         params = request.get_json()
     except Exception:
         return abort(400, "Not a JSON")
+    for k, v in params.items():
+        if k != 'id' and k != 'created_at' and k != 'updated_at':
+            setattr(city, k, v)
+    city.save()
+    return jsonify(city.to_dict())
