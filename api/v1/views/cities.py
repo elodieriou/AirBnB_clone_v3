@@ -50,15 +50,13 @@ def post_city_by_state_id(state_id):
     if state is None:
         return abort(404)
 
-    try:
-        params = request.get_json()
-    except Exception:
+    params = request.get_json()
+    if params is None:
         return abort(400, "Not a JSON")
     if "name" not in params.keys():
         return abort(400, "Missing name")
 
-    n = params['name']
-    new = City(name=n, state_id=state_id)
+    new = City(**params)
     new.save()
     return jsonify(new.to_dict()), 201
 
@@ -69,9 +67,12 @@ def put_city(city_id):
     """Method that updates a city based on its id"""
     city = storage.get(City, city_id)
     if city is None:
-        return abort(404)
-
-    try:
-        params = request.get_json()
-    except Exception:
-        return abort(400, "Not a JSON")
+        abort(404)
+    params = request.get_json()
+    if params is None:
+        abort(400, "Not a JSON")
+    for k, v in params.items():
+        if k != 'id' and k != 'created_at' and k != 'updated_at':
+            setattr(city, k, v)
+    city.save()
+    return jsonify(city.to_dict())
