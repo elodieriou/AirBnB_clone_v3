@@ -49,8 +49,6 @@ def post_user():
         abort(400, "Not a JSON")
     if params.get("email") is None:
         abort(400, "Missing email")
-    if params.get("name") is None:
-        abort(400, "Missing name")
     if params.get("password") is None:
         abort(400, "Missing password")
     new = User(**params)
@@ -69,7 +67,8 @@ def put_user(user_id):
     if params is None:
         return abort(400, "Not a JSON")
     for k, v in params.items():
-        if k != 'id' and k != 'created_at' and k != 'updated_at':
+        if k != 'id' and k != 'created_at'
+        and k != 'updated_at' and k != "email":
             setattr(user, k, v)
     user.save()
     return jsonify(user.to_dict())
