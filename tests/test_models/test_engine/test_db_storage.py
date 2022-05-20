@@ -75,7 +75,8 @@ class TestDBStorage(unittest.TestCase):
         """Tests for get method."""
         s = State(name="California")
         s.save()
-        u = User()
+        u = User(first_name="Jake", last_name="John", password="jhftyd",
+                 email="exemple@gmail.com")
         u.save()
         self.assertIs(s, models.storage.get(State, s.id))
         self.assertIs(u, models.storage.get(User, u.id))
