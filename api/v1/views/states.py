@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """This modules defines the view for State object to handles all default API
 actions"""
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, make_response
 from models.state import State
 from models import storage
 from api.v1.views import app_views
@@ -44,15 +44,14 @@ def delete_state(state_id):
                  strict_slashes=False)
 def post_state():
     """ Method that create a new state. """
-    try:
-        params = request.get_json()
-    except Exception:
+    params = request.get_json()
+    if params is None:
         abort(400, "Not a JSON")
     if params.get("name") is None:
         abort(400, "Missing name")
     new = State(**params)
     new.save()
-    return jsonify(new.to_dict()), 201
+    return make_response(jsonify(new.to_dict()), 201)
 
 
 @app_views.route('states/<state_id>', methods=['PUT'], strict_slashes=False)
