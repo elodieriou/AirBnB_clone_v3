@@ -6,41 +6,11 @@ from models.user import User
 from models import storage
 from api.v1.views import app_views
 
-@app_views.route('/users', methods=['GET'], strict_slashes=False)
-def get_users():
-    """get user information for all users"""
-    users = []
-    for user in storage.all("User").values():
-        users.append(user.to_dict())
-    return jsonify(users)
 
-
-@app_views.route('/users/<string:user_id>', methods=['GET'],
-                 strict_slashes=False)
-def get_user(user_id):
-    """get user information for specified user"""
-    user = storage.get("User", user_id)
-    if user is None:
-        abort(404)
-    return jsonify(user.to_dict())
-
-
-@app_views.route('/users/<string:user_id>', methods=['DELETE'],
-                 strict_slashes=False)
-def delete_user(user_id):
-    """deletes a user based on its user_id"""
-    user = storage.get("User", user_id)
-    if user is None:
-        abort(404)
-    user.delete()
-    storage.save()
-    return (jsonify({}))
-
-
-"""@app_views.route('/users', methods=['GET'],
+@app_views.route('/users', methods=['GET'],
                  strict_slashes=False)
 def get_users():
-    ""Retrieves get method for all users""
+    """Retrieves get method for all users"""
     list_users = []
     all_a = storage.all(User).values()
     for user in all_a:
@@ -51,7 +21,7 @@ def get_users():
 @app_views.route('/users/<user_id>', methods=['GET'],
                  strict_slashes=False)
 def get_user_id(user_id):
-    ""Retrieves get method for a user with a given id""
+    """Retrieves get method for a user with a given id"""
     user = storage.get(User, user_id)
     if user is None:
         return abort(404)
@@ -61,13 +31,13 @@ def get_user_id(user_id):
 @app_views.route('/user/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_user(user_id):
-    "" Method that deletes an user based on its ID. ""
+    """ Method that deletes an user based on its ID. """
     user = storage.get(User, user_id)
     if user is None:
         return abort(404)
     user.delete()
     storage.save()
-    return jsonify({})"""
+    return jsonify({})
 
 
 @app_views.route('/users', methods=['POST'],
