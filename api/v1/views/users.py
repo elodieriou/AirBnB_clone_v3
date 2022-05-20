@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """This modules defines the view for User object to handles all default API
 actions"""
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, make_response
 from models.user import User
 from models import storage
 from api.v1.views import app_views
