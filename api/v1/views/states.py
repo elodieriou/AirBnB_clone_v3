@@ -51,7 +51,7 @@ def post_state():
         abort(400, "Missing name")
     new = State(**params)
     new.save()
-    return make_response(jsonify(new.to_dict()), 201)
+    return jsonify(new.to_dict()), 201
 
 
 @app_views.route('states/<state_id>', methods=['PUT'], strict_slashes=False)
@@ -67,4 +67,4 @@ def put_state(state_id):
         if k != 'id' and k != 'created_at' and k != 'updated_at':
             setattr(state, k, v)
     state.save()
-    return make_response(jsonify(state.to_dict()))
+    return jsonify(state.to_dict())
