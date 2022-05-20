@@ -47,9 +47,9 @@ def post_state():
     try:
         params = request.get_json()
     except Exception:
-        return abort(400, "Not a JSON")
-    if "name" not in params.keys():
-        return abort(400, "Missing name")
+        abort(400, "Not a JSON")
+    if params.get("name") is None:
+        abort(400, "Missing name")
     new = State(**params)
     new.save()
     return jsonify(new.to_dict()), 201
