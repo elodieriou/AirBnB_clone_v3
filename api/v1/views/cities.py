@@ -55,7 +55,7 @@ def post_city_by_state_id(state_id):
         return abort(400, "Not a JSON")
     if "name" not in params.keys():
         return abort(400, "Missing name")
-
+    params['state_id'] = state.id
     new = City(**params)
     new.save()
     return jsonify(new.to_dict()), 201
