@@ -50,8 +50,7 @@ def post_state():
         return abort(400, "Not a JSON")
     if "name" not in params.keys():
         return abort(400, "Missing name")
-    n = params['name']
-    new = State(name=n)
+    new = State(**params)
     new.save()
     return jsonify(new.to_dict()), 201
 
