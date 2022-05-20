@@ -66,9 +66,9 @@ def put_user(user_id):
     params = request.get_json()
     if params is None:
         return abort(400, "Not a JSON")
+    li = ["id", "created_at", "updated_at", "email"]
     for k, v in params.items():
-        if k != 'id' and k != 'created_at'
-        and k != 'updated_at' and k != "email":
+        if k not in li:
             setattr(user, k, v)
     user.save()
     return jsonify(user.to_dict())
