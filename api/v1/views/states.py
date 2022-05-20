@@ -22,22 +22,21 @@ def get_states():
                  strict_slashes=False)
 def get_state_id(state_id):
     """Retrieves get method for a state with a given id"""
-    for state in storage.all(State).values():
-        if state.id == state_id:
-            return jsonify(state.to_dict())
-    abort(404)
+    state = storage.get(State, state_id)
+    if state is None:
+        return abort(404)
+    return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
     """ Method that deletes a state based on its ID. """
-    for state in storage.all(State).values():
-        if state.id == state_id:
-            state.delete()
-            storage.save()
-            return jsonify({})
-    abort(404)
+    state = storage.get(State, state_id)
+    if state is None:
+        return abort(404)
+    state.delete()
+    storage.save()
+    return jsonify({})
 
 
 @app_views.route('/states', methods=['POST'],
