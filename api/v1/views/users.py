@@ -7,23 +7,16 @@ from models import storage
 from api.v1.views import app_views
 
 
-"""@app_views.route('/users', methods=['GET'],
+@app_views.route('/users', methods=['GET'],
                  strict_slashes=False)
 def get_users():
-    ""Retrieves get method for all users""
+    """Retrieves get method for all users"""
     list_users = []
     all_a = storage.all(User).values()
     for user in all_a:
         list_users.append(user.to_dict())
     return jsonify(list_users)
-"""
-@app_views.route('/users', methods=['GET'], strict_slashes=False)
-def get_users():
-    """get user information for all users"""
-    users = []
-    for user in storage.all("User").values():
-        users.append(user.to_dict())
-    return jsonify(users)
+
 
 @app_views.route('/users/<user_id>', methods=['GET'],
                  strict_slashes=False)
@@ -35,7 +28,7 @@ def get_user_id(user_id):
     return jsonify(user.to_dict())
 
 
-@app_views.route('/user/<user_id>', methods=['DELETE'],
+@app_views.route('/users/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_user(user_id):
     """ Method that deletes an user based on its ID. """
