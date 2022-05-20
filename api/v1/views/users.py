@@ -18,13 +18,21 @@ def get_users():
     return jsonify(list_users)
 
 
-@app_views.route('/users/<user_id>', methods=['GET'],
+"""@app_views.route('/users/<user_id>', methods=['GET'],
                  strict_slashes=False)
 def get_user_id(user_id):
-    """Retrieves get method for a user with a given id"""
+    ""Retrieves get method for a user with a given id""
     user = storage.get(User, user_id)
     if user is None:
         return abort(404)
+    return jsonify(user.to_dict())"""
+@app_views.route('/users/<string:user_id>', methods=['GET'],
+                 strict_slashes=False)
+def get_user(user_id):
+    """get user information for specified user"""
+    user = storage.get("User", user_id)
+    if user is None:
+        abort(404)
     return jsonify(user.to_dict())
 
 
