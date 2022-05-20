@@ -60,12 +60,11 @@ def put_state(state_id):
     state = storage.get(State, state_id)
     if state is None:
         return abort(404)
-    try:
-        params = request.get_json()
-    except Exception:
+    params = request.get_json()
+    if params is None:
         return abort(400, "Not a JSON")
     for k, v in params.items():
         if k != 'id' and k != 'created_at' and k != 'updated_at':
             setattr(state, k, v)
     state.save()
-    return jsonify(state.to_dict())
+    return make_response(jsonify(state.to_dict()))
