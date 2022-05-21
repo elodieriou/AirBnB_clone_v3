@@ -4,7 +4,6 @@ Contains class BaseModel
 """
 
 from datetime import datetime
-import hashlib
 import models
 from os import getenv
 import sqlalchemy
@@ -59,7 +58,7 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
-    def to_dict(self, pwd=False):
+    def to_dict(self):
         """returns a dictionary containing all keys/values of the instance"""
         new_dict = self.__dict__.copy()
         if "created_at" in new_dict:
@@ -69,8 +68,6 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
-        if pwd is False:
-            del new_dict["password"]
         return new_dict
 
     def delete(self):
