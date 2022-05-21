@@ -3,6 +3,8 @@
 actions"""
 from flask import jsonify, abort, request
 from models.place import Place
+from models.city import City
+from models.user import User
 from models import storage
 from api.v1.views import app_views
 
