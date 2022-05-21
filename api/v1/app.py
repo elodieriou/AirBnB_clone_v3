@@ -8,7 +8,7 @@ from os import getenv
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
-cors = CORS(app, ressources={r"/api/v1/*": {"origins": "0.0.0.0"}})
+cors = CORS(app, ressources={"/*": {"origins": "0.0.0.0"}})
 
 host = getenv('HBNB_API_HOST', '0.0.0.0')
 port = getenv('HBNB_API_PORT', '5000')
