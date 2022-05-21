@@ -61,6 +61,7 @@ def post_place(city_id):
         return abort(404)
     if params.get("name") is None:
         abort(400, "Missing name")
+    params['city_id'] = city_id
     new = Place(**params)
     new.save()
     return jsonify(new.to_dict()), 201
