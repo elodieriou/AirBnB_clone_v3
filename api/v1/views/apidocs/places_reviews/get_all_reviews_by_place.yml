@@ -1,0 +1,40 @@
+GET all reviews by place with a place_id
+---
+tags:
+  - Places Reviews
+parameters:
+  - name: place_id
+    in: path
+    path: /api/v1/places/<place_id>/reviews
+    type: string
+    required: true
+    description: The unique id of the place to retrieve
+responses:
+  404:
+    description: Not found - The server cannot find the requested resource
+  200:
+    description: OK - The request has succeeded
+    schema:
+      type: array
+      properties:
+        __class__:
+          type: string
+          description: The class name
+        id:
+          type: string
+          description: The unique id of the reviews
+        text:
+          type: string
+          description: The text of the reviews
+        place_id:
+          type: string
+          description: The unique id of the place associated
+        user_id:
+          type: string
+          description: The unique id of the user associated
+        created_at:
+          type: string
+          description: The datetime of the review's creation
+        updated_at:
+          type: string
+          description: The datetime of the review's modification

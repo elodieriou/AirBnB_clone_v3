@@ -1,0 +1,24 @@
+CREATE a city by state with a state_id
+---
+tags:
+  - Cities
+parameters:
+  - name: state_id
+    in: path
+    path: /api/v1/states/<state_id>/cities
+    type: string
+    required: true
+    description: The unique id of the state associated to the city
+  - name: name
+    in: body
+    type: string
+    required: true
+    properties:
+      name:
+        type: string
+        description: The name of the city to create
+responses:
+  400:
+    description: Bad Request - The server cannot process the request due to it's not a JSON or missing name
+  201:
+    description: Created - The request has succeeded and has led to the creation of a resource

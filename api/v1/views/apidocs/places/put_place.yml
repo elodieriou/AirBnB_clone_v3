@@ -1,0 +1,54 @@
+UPDATE a place with its id
+---
+tags:
+  - Places
+parameters:
+  - name: place_id
+    in: path
+    path: /api/v1/places/<place_id>
+    type: string
+    required: true
+    description: The unique id of the place to update
+  - name: update place
+    in: body
+    type: string
+    required: false
+    description: WARNING! Delete the attribute(s) that should not be update
+    properties:
+      name:
+        type: string
+        description: The name of the place
+      city_id:
+        type: string
+        description: The unique id of the city associated
+      user_id:
+        type: string
+        description: The unique id of the user associated
+      description:
+        type: string
+        description: The description of the place
+      number_rooms:
+        type: integer
+        description: The number of room in the place
+      number_bathrooms:
+        type: integer
+        description: The number of bathrooms in the place
+      max_guest:
+        type: integer
+        description: The max guest possible in the place
+      price_by_night:
+        type: integer
+        description: The price by night for the place
+      latitude:
+        type: float
+        description: The latitude of the place
+      longitude:
+        type: float
+        description: The longitude of the place
+responses:
+  404:
+    description: Not found - The server cannot find the requested resource
+  400:
+    description: Bad Request - The server cannot process the request due to it's not a JSON
+  200:
+    description: OK - The request has succeeded

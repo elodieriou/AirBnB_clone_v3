@@ -1,0 +1,27 @@
+CREATE a review by place with a place_id
+---
+tags:
+  - Places Reviews
+parameters:
+  - name: place_id
+    in: path
+    path: /api/v1/places/<place_id>/reviews
+    type: string
+    required: true
+    description: The unique id of the place associated to the review
+  - name: create review
+    in: body
+    type: string
+    required: True
+    properties:
+      text:
+        type: string
+        description: The text of the review to create
+      user_id:
+        type: string
+        description: The unique id of the user associated
+responses:
+  400:
+    description: Bad Request - The server cannot process the request due to it's not a JSON, missing text or missing user_id
+  201:
+    description: Created - The request has succeeded and has led to the creation of a resource

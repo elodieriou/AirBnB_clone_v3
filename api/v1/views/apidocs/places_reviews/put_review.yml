@@ -1,0 +1,27 @@
+UPDATE a review with its id
+---
+tags:
+  - Places Reviews
+parameters:
+  - name: review_id
+    in: path
+    path: /api/v1/reviews/<review_id>
+    type: string
+    required: true
+    description: The unique id of the review to update
+  - name: update review
+    in: body
+    type: string
+    required: false
+    description: WARNING! Delete the attribute(s) that should not be update
+    properties:
+      text:
+        type: string
+        description: The text of the review to update
+responses:
+  404:
+    description: Not found - The server cannot find the requested resource
+  400:
+    description: Bad Request - The server cannot process the request due to it's not a JSON
+  200:
+    description: OK - The request has succeeded

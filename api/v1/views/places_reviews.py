@@ -2,6 +2,7 @@
 """This modules defines the view for Place object to handles all default API
 actions"""
 from flask import jsonify, abort, request
+from flasgger.utils import swag_from
 from models.place import Place
 from models.city import City
 from models.user import User
@@ -12,6 +13,7 @@ from api.v1.views import app_views
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
+@swag_from('apidocs/places_reviews/get_all_reviews_by_place.yml', methods=['GET'])
 def get_reviews(place_id):
     """Retrieves get method for all reviews"""
     for place in storage.all(Place).values():
@@ -25,6 +27,7 @@ def get_reviews(place_id):
 
 @app_views.route('/reviews/<review_id>', methods=['GET'],
                  strict_slashes=False)
+@swag_from('apidocs/places_reviews/get_review.yml', methods=['GET'])
 def get_review(review_id):
     """Retrieves get method for a review with a given id"""
     review = storage.get(Review, review_id)
@@ -35,6 +38,7 @@ def get_review(review_id):
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'],
                  strict_slashes=False)
+@swag_from('apidocs/places_reviews/delete_review.yml', methods=['DELETE'])
 def delete_review(review_id):
     """ Method that deletes a review based on its ID. """
     review = storage.get(Review, review_id)
@@ -47,6 +51,7 @@ def delete_review(review_id):
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
+@swag_from('apidocs/places_reviews/post_review_by_place.yml', methods=['POST'])
 def post_review(place_id):
     """ Method that create a new review. """
     place = storage.get(Place, place_id)
@@ -70,6 +75,7 @@ def post_review(place_id):
 
 @app_views.route('/reviews/<review_id>',
                  methods=['PUT'], strict_slashes=False)
+@swag_from('apidocs/places_reviews/put_review.yml', methods=['PUT'])
 def put_review(review_id):
     """ Method that update a review. """
     review = storage.get(Review, review_id)

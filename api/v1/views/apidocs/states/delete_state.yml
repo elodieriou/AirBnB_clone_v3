@@ -1,0 +1,16 @@
+DELETE a state with its id
+---
+tags:
+  - States
+parameters:
+  - name: state_id
+    in: path
+    path: /api/v1/states/<state_id>
+    type: string
+    required: true
+    description: The unique id of the state to delete
+responses:
+  404:
+    description: Not found - The server cannot find the requested resource
+  200:
+    description: OK - The request has succeeded
