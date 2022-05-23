@@ -13,7 +13,8 @@ from api.v1.views import app_views
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
-@swag_from('apidocs/places_reviews/get_all_reviews_by_place.yml', methods=['GET'])
+@swag_from('apidocs/places_reviews/get_all_reviews_by_place.yml',
+           methods=['GET'])
 def get_reviews(place_id):
     """Retrieves get method for all reviews"""
     for place in storage.all(Place).values():
