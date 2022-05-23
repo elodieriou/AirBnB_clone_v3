@@ -1,0 +1,27 @@
+CREATE a place by city with a city_id
+---
+tags:
+  - Places
+parameters:
+  - name: city_id
+    in: path
+    path: /api/v1/cities/<city_id>/places
+    type: string
+    required: true
+    description: The unique id of the city associated to the place
+  - name: create place
+    in: body
+    type: string
+    required: True
+    properties:
+      name:
+        type: string
+        description: The name of the place to create
+      user_id:
+        type: string
+        description: The unique id of the user associated to the place
+responses:
+  400:
+    description: Bad Request - The server cannot process the request due to it's not a JSON, missing name or missing user_id
+  201:
+    description: Created - The request has succeeded and has led to the creation of a resource

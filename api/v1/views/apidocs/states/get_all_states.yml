@@ -1,0 +1,25 @@
+GET all states
+---
+tags:
+  - States
+responses:
+  200:
+    description: OK - The request has succeeded
+    schema:
+      type: array
+      properties:
+        __class__:
+          type: string
+          description: The class name
+        id:
+          type: string
+          description: The unique id of a state
+        name:
+          type: string
+          description: The name of the state
+        created_at:
+          type: string
+          description: The datetime of the state's creation
+        updated_at:
+          type: string
+          description: The datetime of the state's modification

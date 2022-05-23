@@ -1,0 +1,30 @@
+UPDATE a user with its id
+---
+tags:
+  - Users
+parameters:
+  - name: user_id
+    in: path
+    path: /api/v1/users/<user_id>
+    type: string
+    required: true
+    description: The unique id of the user to update
+  - name: update user
+    in: body
+    type: string
+    required: false
+    description: WARNING! Delete the attribute(s) that should not be update
+    properties:
+      first_name:
+        type: string
+        description: The first name of the user to update
+      last_name:
+        type: string
+        description: The last name of the user to update
+responses:
+  404:
+    description: Not found - The server cannot find the requested resource
+  400:
+    description: Bad Request - The server cannot process the request due to it's not a JSON
+  200:
+    description: OK - The request has succeeded

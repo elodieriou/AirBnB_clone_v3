@@ -2,6 +2,7 @@
 """New views for City objects"""
 from api.v1.views import app_views
 from flask import jsonify, abort, request
+from flasgger.utils import swag_from
 from models import storage
 from models.state import State
 from models.city import City
@@ -9,6 +10,7 @@ from models.city import City
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
+@swag_from('apidocs/cities/get_all_cities_by_state.yml', methods=['GET'])
 def get_cities_by_state_id(state_id):
     """Get method for retrieve all cities based on state_id"""
     for state in storage.all(State).values():
@@ -22,6 +24,7 @@ def get_cities_by_state_id(state_id):
 
 @app_views.route('/cities/<city_id>', methods=['GET'],
                  strict_slashes=False)
+@swag_from('apidocs/cities/get_city.yml', methods=['GET'])
 def get_city_id(city_id):
     """Retrieves get method for a city with a given id"""
     for city in storage.all(City).values():
@@ -32,6 +35,7 @@ def get_city_id(city_id):
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'],
                  strict_slashes=False)
+@swag_from('apidocs/cities/delete_city.yml', methods=['DELETE'])
 def delete_city(city_id):
     """ Method that deletes a city based on its ID. """
     for city in storage.all(City).values():
@@ -44,6 +48,7 @@ def delete_city(city_id):
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
                  strict_slashes=False)
+@swag_from('apidocs/cities/post_city_by_state.yml', methods=['POST'])
 def post_city_by_state_id(state_id):
     """ Method that create a new city based on state_id. """
     state = storage.get(State, state_id)
@@ -63,6 +68,7 @@ def post_city_by_state_id(state_id):
 
 @app_views.route('/cities/<city_id>', methods=['PUT'],
                  strict_slashes=False)
+@swag_from('apidocs/cities/put_city.yml', methods=['PUT'])
 def put_city(city_id):
     """Method that updates a city based on its id"""
     city = storage.get(City, city_id)

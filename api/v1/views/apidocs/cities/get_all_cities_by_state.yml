@@ -1,0 +1,37 @@
+GET all cities by state with a state_id
+---
+tags:
+  - Cities
+parameters:
+  - name: state_id
+    in: path
+    path: /api/v1/states/<state_id>/cities
+    type: string
+    required: true
+    description: The unique id of the state to retrieve
+responses:
+  404:
+    description: Not found - The server cannot find the requested resource
+  200:
+    description: OK - The request has succeeded
+    schema:
+      type: array
+      properties:
+        __class__:
+          type: string
+          description: The class name
+        id:
+          type: string
+          description: The unique id of the city
+        name:
+          type: string
+          description: The email of the user
+        state_id:
+          type: string
+          description: The unique id of the state associated
+        created_at:
+          type: string
+          description: The datetime of the city's creation
+        updated_at:
+          type: string
+          description: The datetime of the city's modification

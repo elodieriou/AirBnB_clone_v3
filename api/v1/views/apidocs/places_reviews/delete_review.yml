@@ -1,0 +1,16 @@
+DELETE a review with its id
+---
+tags:
+  - Places Reviews
+parameters:
+  - name: review_id
+    in: path
+    path: /api/v1/reviews/<review_id>
+    type: string
+    required: true
+    description: The unique id of the review to delete
+responses:
+  404:
+    description: Not found - The server cannot find the requested resource
+  200:
+    description: OK - The request has succeeded

@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """This modules defines the view for State object to handles all default API
 actions"""
-from flask import jsonify, abort, request, make_response
+from flask import jsonify, abort, request
+from flasgger.utils import swag_from
 from models.state import State
 from models import storage
 from api.v1.views import app_views
@@ -9,6 +10,7 @@ from api.v1.views import app_views
 
 @app_views.route('/states', methods=['GET'],
                  strict_slashes=False)
+@swag_from('apidocs/states/get_all_states.yml', methods=['GET'])
 def get_states():
     """Retrieves get method for all state"""
     list_state = []
@@ -20,6 +22,7 @@ def get_states():
 
 @app_views.route('/states/<state_id>', methods=['GET'],
                  strict_slashes=False)
+@swag_from('apidocs/states/get_state.yml', methods=['GET'])
 def get_state_id(state_id):
     """Retrieves get method for a state with a given id"""
     state = storage.get(State, state_id)
@@ -30,6 +33,7 @@ def get_state_id(state_id):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
+@swag_from('apidocs/states/delete_state.yml', methods=['DELETE'])
 def delete_state(state_id):
     """ Method that deletes a state based on its ID. """
     state = storage.get(State, state_id)
@@ -42,6 +46,7 @@ def delete_state(state_id):
 
 @app_views.route('/states', methods=['POST'],
                  strict_slashes=False)
+@swag_from('apidocs/states/post_state.yml', methods=['POST'])
 def post_state():
     """ Method that create a new state. """
     params = request.get_json()
@@ -55,6 +60,7 @@ def post_state():
 
 
 @app_views.route('states/<state_id>', methods=['PUT'], strict_slashes=False)
+@swag_from('apidocs/states/put_state.yml', methods=['PUT'])
 def put_state(state_id):
     """ Method that update a state. """
     state = storage.get(State, state_id)

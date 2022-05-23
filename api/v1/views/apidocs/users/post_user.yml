@@ -1,0 +1,24 @@
+CREATE a user
+---
+tags:
+  - Users
+parameters:
+  - name: email_and_password
+    in: body
+    type: string
+    required: true
+    requires:
+      - email
+      - password
+    properties:
+      email:
+        type: string
+        description: The email of the user to create
+      password:
+        type: string
+        description: The password of the user to create
+responses:
+  400:
+    description: Bad Request - The server cannot process the request due to it's not a JSON, missing email or password
+  201:
+    description: Created - The request has succeeded and has led to the creation of a resource

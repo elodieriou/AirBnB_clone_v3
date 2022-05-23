@@ -2,6 +2,7 @@
 """This modules defines the view for Place object to handles all default API
 actions"""
 from flask import jsonify, abort, request
+from flasgger.utils import swag_from
 from models.place import Place
 from models.city import City
 from models.user import User
@@ -11,6 +12,7 @@ from api.v1.views import app_views
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
+@swag_from('apidocs/places/get_all_places_by_city.yml', methods=['GET'])
 def get_places(city_id):
     """Retrieves get method for all places"""
     for city in storage.all(City).values():
@@ -24,6 +26,7 @@ def get_places(city_id):
 
 @app_views.route('/places/<place_id>', methods=['GET'],
                  strict_slashes=False)
+@swag_from('apidocs/places/get_place.yml', methods=['GET'])
 def get_place(place_id):
     """Retrieves get method for a place with a given id"""
     place = storage.get(Place, place_id)
@@ -34,6 +37,7 @@ def get_place(place_id):
 
 @app_views.route('/places/<place_id>', methods=['DELETE'],
                  strict_slashes=False)
+@swag_from('apidocs/places/delete_place.yml', methods=['DELETE'])
 def delete_place(place_id):
     """ Method that deletes a place based on its ID. """
     place = storage.get(Place, place_id)
@@ -46,6 +50,7 @@ def delete_place(place_id):
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
+@swag_from('apidocs/places/post_place_by_city.yml', methods=['POST'])
 def post_place(city_id):
     """ Method that create a new place. """
     city = storage.get(City, city_id)
@@ -69,6 +74,7 @@ def post_place(city_id):
 
 @app_views.route('/places/<place_id>',
                  methods=['PUT'], strict_slashes=False)
+@swag_from('apidocs/places/put_place.yml', methods=['PUT'])
 def put_place(place_id):
     """ Method that update an place. """
     place = storage.get(Place, place_id)

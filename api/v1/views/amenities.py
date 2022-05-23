@@ -2,6 +2,7 @@
 """This modules defines the view for Amenity object to handles all default API
 actions"""
 from flask import jsonify, abort, request
+from flasgger.utils import swag_from
 from models.amenity import Amenity
 from models import storage
 from api.v1.views import app_views
@@ -9,6 +10,7 @@ from api.v1.views import app_views
 
 @app_views.route('/amenities', methods=['GET'],
                  strict_slashes=False)
+@swag_from('apidocs/amenities/get_all_amenities.yml', methods=['GET'])
 def get_amenities():
     """Retrieves get method for all amenities"""
     list_amenities = []
@@ -20,6 +22,7 @@ def get_amenities():
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET'],
                  strict_slashes=False)
+@swag_from('apidocs/amenities/get_amenity.yml', methods=['GET'])
 def get_amenity_id(amenity_id):
     """Retrieves get method for a amenity with a given id"""
     amenity = storage.get(Amenity, amenity_id)
@@ -30,6 +33,7 @@ def get_amenity_id(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
+@swag_from('apidocs/amenities/delete_amenity.yml', methods=['DELETE'])
 def delete_amenity(amenity_id):
     """ Method that deletes an amenity based on its ID. """
     amenity = storage.get(Amenity, amenity_id)
@@ -42,6 +46,7 @@ def delete_amenity(amenity_id):
 
 @app_views.route('/amenities', methods=['POST'],
                  strict_slashes=False)
+@swag_from('apidocs/amenities/post_amenity.yml', methods=['POST'])
 def post_amenity():
     """ Method that create a new amenity. """
     params = request.get_json()
@@ -56,6 +61,7 @@ def post_amenity():
 
 @app_views.route('amenities/<amenity_id>',
                  methods=['PUT'], strict_slashes=False)
+@swag_from('apidocs/amenities/put_amenity.yml', methods=['PUT'])
 def put_amenity(amenity_id):
     """ Method that update an amenity. """
     amenity = storage.get(Amenity, amenity_id)

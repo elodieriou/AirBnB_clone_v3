@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """This modules defines the view for User object to handles all default API
 actions"""
-from flask import jsonify, abort, request, make_response
+from flask import jsonify, abort, request
+from flasgger.utils import swag_from
 from models.user import User
 from models import storage
 from api.v1.views import app_views
@@ -9,6 +10,7 @@ from api.v1.views import app_views
 
 @app_views.route('/users', methods=['GET'],
                  strict_slashes=False)
+@swag_from('apidocs/users/get_all_users.yml', methods=['GET'])
 def get_users():
     """Retrieves get method for all users"""
     list_users = []
@@ -20,6 +22,7 @@ def get_users():
 
 @app_views.route('/users/<user_id>', methods=['GET'],
                  strict_slashes=False)
+@swag_from('apidocs/users/get_user.yml', methods=['GET'])
 def get_user_id(user_id):
     """Retrieves get method for a user with a given id"""
     user = storage.get(User, user_id)
@@ -30,6 +33,7 @@ def get_user_id(user_id):
 
 @app_views.route('/users/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
+@swag_from('apidocs/users/delete_user.yml', methods=['DELETE'])
 def delete_user(user_id):
     """ Method that deletes an user based on its ID. """
     user = storage.get(User, user_id)
@@ -42,6 +46,7 @@ def delete_user(user_id):
 
 @app_views.route('/users', methods=['POST'],
                  strict_slashes=False)
+@swag_from('apidocs/users/post_user.yml', methods=['POST'])
 def post_user():
     """ Method that create a new user. """
     params = request.get_json()
@@ -58,6 +63,7 @@ def post_user():
 
 @app_views.route('users/<user_id>',
                  methods=['PUT'], strict_slashes=False)
+@swag_from('apidocs/users/put_user.yml', methods=['PUT'])
 def put_user(user_id):
     """ Method that update an user. """
     user = storage.get(User, user_id)

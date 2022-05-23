@@ -1,0 +1,16 @@
+DELETE a city with its id
+---
+tags:
+  - Cities
+parameters:
+  - name: city_id
+    in: path
+    path: /api/v1/cities/<city_id>
+    type: string
+    required: true
+    description: The unique id of the city to delete
+responses:
+  404:
+    description: Not found - The server cannot find the requested resource
+  200:
+    description: OK - The request has succeeded

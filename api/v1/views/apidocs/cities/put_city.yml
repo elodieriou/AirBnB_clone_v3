@@ -1,0 +1,30 @@
+UPDATE a city with its id
+---
+tags:
+  - Cities
+parameters:
+  - name: city_id
+    in: path
+    path: /api/v1/cities/<city_id>
+    type: string
+    required: true
+    description: The unique id of the city to update
+  - name: update city
+    in: body
+    type: string
+    required: false
+    description: WARNING! Delete the attribute(s) that should not be update
+    properties:
+      name:
+        type: string
+        description: The name of the city to update
+      state_id:
+        type: string
+        description: The state_id of the state associated to update
+responses:
+  404:
+    description: Not found - The server cannot find the requested resource
+  400:
+    description: Bad Request - The server cannot process the request due to it's not a JSON
+  200:
+    description: OK - The request has succeeded

@@ -1,0 +1,18 @@
+CREATE an amenity
+---
+tags:
+  - Amenities
+parameters:
+  - name: name
+    in: body
+    type: string
+    required: true
+    properties:
+      name:
+        type: string
+        description: The name of the amenity to create
+responses:
+  400:
+    description: Bad Request - The server cannot process the request due to it's not a JSON or missing name
+  201:
+    description: Created - The request has succeeded and has led to the creation of a resource
