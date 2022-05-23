@@ -6,6 +6,7 @@ from models.place import Place
 from models.amenity import Amenity
 from models import storage
 from api.v1.views import app_views
+from os import getenv
 
 
 @app_views.route('/places/<place_id>/amenities', methods=['GET'],
@@ -49,6 +50,9 @@ def post_amenities(place_id, amenity_id):
     if amenity is None:
         return abort(404)
     if amenity in place.amenities:
-        return amenity
-    place.amenities.append(amenity)
-    return (amenity), 201
+        return jsonify(amenity.to_dict())
+    if getenv("HBNB_TYPE_STORAGE") == "fs":
+        place.amenity_ids.append(amenity_id)
+    elif getenv("HBNB_TYPE_STORAGE") == "db":
+        place.amenities.append(amenity)
+    return jsonify(amenity.to_dict()), 201
