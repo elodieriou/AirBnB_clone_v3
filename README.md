@@ -1,167 +1,231 @@
-# AirBnB Clone - The Console
-The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
+# AirBnB_clone
 
-![image](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2020/9/02078cd7f0573885c85a225c7436584a5afea1f9.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOU5BHMTQX4%2F20220519%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220519T070536Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=81064e0ad3c060ebe2b0ae50bfe01f475fbfb16656f6bfea2fcddca314abec3a)
+![AirBnB clone logo.](https://github.com/rmarcais/AirBnB_clone_v2/raw/main/img/logo_airbnb.png)
 
-#### Functionalities of this command interpreter:
-* Create a new object (ex: a new User or a new Place)
-* Retrieve an object from a file, a database etc...
-* Do operations on objects (count, compute stats, etc...)
-* Update attributes of an object
-* Destroy an object
+## Introduction
 
-## Table of Content
-* [Environment](#environment)
-* [Installation](#installation)
-* [File Descriptions](#file-descriptions)
-* [Usage](#usage)
-* [Examples of use](#examples-of-use)
-* [Bugs](#bugs)
-* [Authors](#authors)
-* [License](#license)
+This project is the first step of a big one witch is to clone the AirBnB full web application.
+ * This first step is in python. We will start by implement the parent class called BaseModel.
+ * This class do the initialization, serialization and deserialization of the future instances : Instance <-> Dictionary <-> JSON string <-> file
+ * During this project, we created some classes that inherit from BaseModel such as : User, State, City, Place, review, state, amenity...
+ * Create the first abstracted storage engine of the project: File storage.
+ * And to finish create the unittest to validate all the classes and storage processes
 
-## Environment
-This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.4.3)
+![image](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2018/6/815046647d23428a14ca.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOU5BHMTQX4%2F20220523%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220523T112936Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=b22e5a5e597a1e98835f74cf7b8c31493467cbd556867daf6a85989345949f63)
 
-## Installation
-* Clone this repository: `git clone "https://github.com/alexaorrico/AirBnB_clone.git"`
-* Access AirBnb directory: `cd AirBnB_clone`
-* Run hbnb(interactively): `./console` and enter command
-* Run hbnb(non-interactively): `echo "<command>" | ./console.py`
+## Definitions
 
-## File Descriptions
-[console.py](console.py) - the console contains the entry point of the command interpreter. 
-List of commands this console current supports:
-* `EOF` - exits console 
-* `quit` - exits console
-* `<emptyline>` - overwrites default emptyline method and does nothing
-* `create` - Creates a new instance of`BaseModel`, saves it (to the JSON file) and prints the id
-* `destroy` - Deletes an instance based on the class name and id (save the change into the JSON file). 
-* `show` - Prints the string representation of an instance based on the class name and id.
-* `all` - Prints all string representation of all instances based or not on the class name. 
-* `update` - Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file). 
+First lets have some few definitions to help understand the project :
 
-#### `models/` directory contains classes used for this project:
-[base_model.py](/models/base_model.py) - The BaseModel class from which future classes will be derived
-* `def __init__(self, *args, **kwargs)` - Initialization of the base model
-* `def __str__(self)` - String representation of the BaseModel class
-* `def save(self)` - Updates the attribute `updated_at` with the current datetime
-* `def to_dict(self)` - returns a dictionary containing all keys/values of the instance
+* __What is a Python package ?__
 
-Classes inherited from Base Model:
-* [amenity.py](/models/amenity.py)
-* [city.py](/models/city.py)
-* [place.py](/models/place.py)
-* [review.py](/models/review.py)
-* [state.py](/models/state.py)
-* [user.py](/models/user.py)
+A Python package is a folder containing modules and maybe other folders that themselves may contain more folders and modules. A package folder usually contains one file named __init__.py that basically tells Python: “Hey, this directory is a package!” The init file may be empty, or it may contain code to be executed upon package initialization.
 
-#### `/models/engine` directory contains File Storage class that handles JASON serialization and deserialization :
-[file_storage.py](/models/engine/file_storage.py) - serializes instances to a JSON file & deserializes back to instances
-* `def all(self)` - returns the dictionary __objects
-* `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
-* `def save(self)` - serializes __objects to the JSON file (path: __file_path)
-* ` def reload(self)` -  deserializes the JSON file to __objects
+* __Why use the command interpreter in Python ?__
 
-#### `/tests` directory contains all unit test cases for this project:
-[/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes
-TestBaseModelDocs class:
-* `def setUpClass(cls)`- Set up for the doc tests
-* `def test_pep8_conformance_base_model(self)` - Test that models/base_model.py conforms to PEP8
-* `def test_pep8_conformance_test_base_model(self)` - Test that tests/test_models/test_base_model.py conforms to PEP8
-* `def test_bm_module_docstring(self)` - Test for the base_model.py module docstring
-* `def test_bm_class_docstring(self)` - Test for the BaseModel class docstring
-* `def test_bm_func_docstrings(self)` - Test for the presence of docstrings in BaseModel methods
+The Cmd instance or subclass instance is a line-oriented interpreter framework. There is no good reason to instantiate Cmd itself; rather, it’s useful as a superclass of an interpreter class you define yourself in order to inherit Cmd’s methods and encapsulate action methods.
 
-TestBaseModel class:
-* `def test_is_base_model(self)` - Test that the instatiation of a BaseModel works
-* `def test_created_at_instantiation(self)` - Test created_at is a pub. instance attribute of type datetime
-* `def test_updated_at_instantiation(self)` - Test updated_at is a pub. instance attribute of type datetime
-* `def test_diff_datetime_objs(self)` - Test that two BaseModel instances have different datetime objects
+* __How to manage `datetime` ?__
 
-[/test_models/test_amenity.py](/tests/test_models/test_amenity.py) - Contains the TestAmenityDocs class:
-* `def setUpClass(cls)` - Set up for the doc tests
-* `def test_pep8_conformance_amenity(self)` - Test that models/amenity.py conforms to PEP8
-* `def test_pep8_conformance_test_amenity(self)` - Test that tests/test_models/test_amenity.py conforms to PEP8
-* `def test_amenity_module_docstring(self)` - Test for the amenity.py module docstring
-* `def test_amenity_class_docstring(self)` - Test for the Amenity class docstring
+To manage datetime in python, you have to import the module named datetime. This module allow you to deal with the hours or the dates
 
-[/test_models/test_city.py](/tests/test_models/test_city.py) - Contains the TestCityDocs class:
-* `def setUpClass(cls)` - Set up for the doc tests
-* `def test_pep8_conformance_city(self)` - Test that models/city.py conforms to PEP8
-* `def test_pep8_conformance_test_city(self)` - Test that tests/test_models/test_city.py conforms to PEP8
-* `def test_city_module_docstring(self)` - Test for the city.py module docstring
-* `def test_city_class_docstring(self)` - Test for the City class docstring
+* __What is a `UUID` what can it be used for?__
 
-[/test_models/test_file_storage.py](/tests/test_models/test_file_storage.py) - Contains the TestFileStorageDocs class:
-* `def setUpClass(cls)` - Set up for the doc tests
-* `def test_pep8_conformance_file_storage(self)` - Test that models/file_storage.py conforms to PEP8
-* `def test_pep8_conformance_test_file_storage(self)` - Test that tests/test_models/test_file_storage.py conforms to PEP8
-* `def test_file_storage_module_docstring(self)` - Test for the file_storage.py module docstring
-* `def test_file_storage_class_docstring(self)` - Test for the FileStorage class docstring
+UUIDs are generally used for identifying information that needs to be unique within a system or a network.
 
-[/test_models/test_place.py](/tests/test_models/test_place.py) - Contains the TestPlaceDoc class:
-* `def setUpClass(cls)` - Set up for the doc tests
-* `def test_pep8_conformance_place(self)` - Test that models/place.py conforms to PEP8.
-* `def test_pep8_conformance_test_place(self)` - Test that tests/test_models/test_place.py conforms to PEP8.
-* `def test_place_module_docstring(self)` - Test for the place.py module docstring
-* `def test_place_class_docstring(self)` - Test for the Place class docstring
+* __What is `*args` and how to use it ?__
 
-[/test_models/test_review.py](/tests/test_models/test_review.py) - Contains the TestReviewDocs class:
-* `def setUpClass(cls)` - Set up for the doc tests
-* `def test_pep8_conformance_review(self)` - Test that models/review.py conforms to PEP8
-* `def test_pep8_conformance_test_review(self)` - Test that tests/test_models/test_review.py conforms to PEP8
-* `def test_review_module_docstring(self)` - Test for the review.py module docstring
-* `def test_review_class_docstring(self)` - Test for the Review class docstring
+The special syntax `*args` in function definitions in python is used to pass a variable number of arguments to a function. But we won't use `*args` in this project.
 
-[/test_models/state.py](/tests/test_models/test_state.py) - Contains the TestStateDocs class:
-* `def setUpClass(cls)` - Set up for the doc tests
-* `def test_pep8_conformance_state(self)` - Test that models/state.py conforms to PEP8
-* `def test_pep8_conformance_test_state(self)` - Test that tests/test_models/test_state.py conforms to PEP8
-* `def test_state_module_docstring(self)` - Test for the state.py module docstring
-* `def test_state_class_docstring(self)` - Test for the State class docstring
+* __What is `**kwargs` and how to use it ?__
 
-[/test_models/user.py](/tests/test_models/test_user.py) - Contains the TestUserDocs class:
-* `def setUpClass(cls)` - Set up for the doc tests
-* `def test_pep8_conformance_user(self)` - Test that models/user.py conforms to PEP8
-* `def test_pep8_conformance_test_user(self)` - Test that tests/test_models/test_user.py conforms to PEP8
-* `def test_user_module_docstring(self)` - Test for the user.py module docstring
-* `def test_user_class_docstring(self)` - Test for the User class docstring
+Kwargs allow you to pass keyword arguments to a function. They are used when you are not sure of the number of keyword arguments that will be passed in the function. Kwargs can be used for unpacking dictionary key, value pairs. This is done using the double asterisk notation ( ** ).
 
+* __How to handle named arguments in a function ?__
 
-## Examples of use
+Keyword arguments (or named arguments) are values that, when passed into a function, are identifiable by specific parameter names. A keyword argument is preceded by a parameter and the assignment operator `=` . Keyword arguments can be likened to dictionaries in that they map a value to a keyword.
+
+## Use the console
+
+The `(hbnb)` Airbnb Clone can be run both in interactive and non-interactive mode.
+To run the console in non-interactive mode, you can use the following command :
+
 ```
-vagrantAirBnB_clone$./console.py
-(hbnb) help
-
+$ echo "help" | ./console.py
+(hbnb)
 Documented commands (type help <topic>):
 ========================================
-EOF  all  create  destroy  help  quit  show  update
+EOF  help  quit
+(hbnb) 
+$
+$ cat test_help
+help
+$
+$ cat test_help | ./console.py
+(hbnb)
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+(hbnb) 
+$
+```
+You can use the interactive mode with the following command :
 
-(hbnb) all MyModel
-** class doesn't exist **
-(hbnb) create BaseModel
-7da56403-cc45-4f1c-ad32-bfafeb2bb050
-(hbnb) all BaseModel
-[[BaseModel] (7da56403-cc45-4f1c-ad32-bfafeb2bb050) {'updated_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772167), 'id': '7da56403-cc45-4f1c-ad32-bfafeb2bb050', 'created_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772123)}]
-(hbnb) show BaseModel 7da56403-cc45-4f1c-ad32-bfafeb2bb050
-[BaseModel] (7da56403-cc45-4f1c-ad32-bfafeb2bb050) {'updated_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772167), 'id': '7da56403-cc45-4f1c-ad32-bfafeb2bb050', 'created_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772123)}
-(hbnb) destroy BaseModel 7da56403-cc45-4f1c-ad32-bfafeb2bb050
-(hbnb) show BaseModel 7da56403-cc45-4f1c-ad32-bfafeb2bb050
-** no instance found **
+```
+$ ./console.py
+(hbnb) help
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+(hbnb) 
+(hbnb) 
 (hbnb) quit
+$
 ```
 
-## Bugs
-No known bugs at this time. 
+## Main commands
 
-## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
-Rémi Marçais - [Github](https://github.com/rmarcais) / [LinkedIn](https://www.linkedin.com/in/remi-marcais/)
-Elodie Riou - [Github](https://github.com/elodieriou) / [LinkedIn](https://www.linkedin.com/in/elodieriou-dev/)
+| COMMAND after the (hbnb)                               |                 DESCRIPTION                  |
+|--------------------------------------------------------|:--------------------------------------------:|
+| quit                                                   |             To quit the console              |
+| EOF                                                    |          To quit the console by EOF          |
+| help + command                                         |     Display the help for the command ask     |
+| create + class                                         |      Creates an object and print the ID      |
+| show + class + id                                      |    To show the informations of the object    |
+| destroy + class + id                                   |             To remove an object              |
+| all + class                                            |     To show all the instances of a class     |
+ | update + class + id + attribute name + "attribute value" | To create or update the attribute of a class |
+| count + class                                          | To count the number of instance by class     |
 
+## New feature
 
-Second part of Airbnb: Joann Vuong
-## License
-Public Domain. No copy write protection. 
+In this new version of the HBNB, we improve two of our command to make them work with multiple argument, the first one that we update is the `do_create`, now we can create new instance with given paramater and In our dictionnary the information will look clearer.
+
+We also updated our [basemodel](https://github.com/rmarcais/AirBnB_clone_v2/blob/main/models/base_model.py). We mainly updated already created class to make them work with sql, for this we had to use `sqlalchemy`, a python module to make python interact with sql.
+
+[Filestorage](https://github.com/rmarcais/AirBnB_clone_v2/blob/main/models/engine/file_storage.py) was updated too, we create a new public instance `delete` that delete an `obj` from `__objects` only if the obj exist inside.
+In this filestorage file we update the `all` instance that permit to the user to show all instance of a class.
+
+We updated all other class file to make them work with sql.
+
+## [BaseModel](https://github.com/rmarcais/AirBnB_clone_v2/blob/main/models/base_model.py)
+
+The BaseModel class is the parent of all the classes : 
+
+* The `init method` defines the common attributes for all the class that inrherite from that one. We call that the constructor method.
+
+* The `str method` is the method that defines the good output format as a string.
+
+* The `save method` is useful to updates the public instance attribute 'updated_at' with
+        the current datetime.
+
+* The `to_dict method` returns a dictionary containing all the keys and values of the instance.
+
+## [Other classes](https://github.com/rmarcais/AirBnB_clone_v2/tree/main/models)
+All the classes listed bellow inherits from BaseModel :
+
+| class       | Attributes | Description |
+|-------------|:----------:|:-----------:|
+| [User](https://github.com/rmarcais/AirBnB_clone_v2/blob/main/models/user.py)       |email + password + first_name + last_name| This class is about user information, it retrieve main information about the future user  |
+| [State](https://github.com/rmarcais/AirBnB_clone_v2/blob/main/models/state.py)     |name                                     | This  class retrieve information about for the future state of the future location |
+|[City](https://github.com/rmarcais/AirBnB_clone_v2/blob/main/models/city.py)       |state_id + name                          |  This class retrieve more precise information about the geographic position of future location |
+| [Place](https://github.com/rmarcais/AirBnB_clone_v2/blob/main/models/place.py)     | city_id + user_id + name + description </br> number_rooms + number_bathrooms + max_guest </br> price_by_night + latitude + longitude + amenity_ids | This class retrieve all information about the future location, all important information like the number of room and the equipment inside the location  |
+| [Review](https://github.com/rmarcais/AirBnB_clone_v2/blob/main/models/review.py)   |place_id + user_id + text                | This class retrieve a review of the future place with information of the user that post the review  |
+| [Amenity](https://github.com/rmarcais/AirBnB_clone_v2/blob/main/models/amenity.py) |name                                     | This class retrieve information about the future amenity  |
+
+# The storage system
+
+Our Air BnB clone has two storage system, a DataBase storage and a File Storage.
+We store our different type of storage in the [Engine](https://github.com/rmarcais/AirBnB_clone_v2/tree/main/models/engine) folder.
+
+To have a better representation of how we store the data, here is a schema:
+
+![image](https://s3.amazonaws.com/intranet-projects-files/concepts/74/hbnb_step2.png)
+
+## [Filestorage](https://github.com/rmarcais/AirBnB_clone_v2/blob/main/models/engine/file_storage.py)
+
+This file is composed of methods that are used by the console :
+* The `all method` display the dictionary view of objects.
+
+* The `new method` sets a new instance with the class name and a new id for the object.
+
+* The `save method` serialize the object in dictionary format to the JSON file.
+
+* The `reload method` deserialize the JSON file to object. In other words, bring the data in the `file.json` and change it to object.
+
+## [DataBase Storage](https://github.com/rmarcais/AirBnB_clone_v2/blob/main/models/engine/db_storage.py)
+
+This file is composed of method that are used by the console :
+* The `all method` display all the object of a class stored in the database.
+
+* The `new method` add a new object to a session.
+
+* The `save method` save everything in the current session in use.
+
+* The `delete method`  delete an object inside the current session.
+
+* The `reload method` create all table and session.
+
+* The `close method` close the session in use.
+
+## [Console](https://github.com/rmarcais/AirBnB_clone_v2/blob/main/console.py)
+
+The HBNBCommand class is created to implement the prompt. The option `do` at the beginning of the method define the action. So `do_quit` defined the command to quit the prompt, the `EOF` command does the same with the signal.
+
+* The `command do_create` is to create a new instance and tell the user if there is a missing argument or if the class called doesn't exist. If the argument are passed on the good way, the instance is created and saved. We update this command to make it work with multiple parameter and with a specific syntax. If your information after the parameter is a string, you should write it like that `name="NAME"`. But if it's an integer or a float, you should write like this `age=5` or `height=175.3`
+```commandline
+Usage: create <Class name> <param 1> <param 2> <param 3>... OR <class name>.create(<param 1> <param 2> <param 3>...)
+```
+* The `command do_show` is to show a string representation of an instance. This mean that when you type : "show User id" on the good way it will display the information of this user. If a argument is missing it will display an error message.
+```commandline
+Usage: show <class name> <id> OR <class name>.show(<id>)
+```
+* The `command do_destroy` works on the same way as "show" but the objective is to remove an instance.
+```commandline
+Usage: destroy <class name> OR <class name>.destroy(<id>)
+```
+* The `command do_all` displays in the prompt the string representation of all the instance saved.
+```commandline
+Usage: all OR all <class name> OR <class name>.all()
+```
+* The `command do_update` is useful to update an instance. If the instance already exist, it updates the instance and the datetime. If the instance doesn't exist, it creates it.
+```commandline
+Usage: update <class name> <id> <attribute name> "<attribute value>" 
+Usage: <class name>.update(<id>, <attribute name>, <attribute value>)
+```
+* The `command do_count` counts the number of instance for each class.
+```commandline
+Usage: count <class name> OR <class name>.count()
+```
+* The `method default` is called when the command is not recognized. If the input line cannot be overrided, an error message is printed and returns. 
+```commandline
+$ input
+(hbnb) User.count()
+$ method default switch by
+(hbnb) count User
+```
+
+## [Python Unit Tests](https://github.com/rmarcais/AirBnB_clone_v2/tree/main/tests)
+
+We have done some tests for our classes and methods. Tests are made to make sure our code display the result and the outputs expected.
+
+The command to display the results of the tests in interactive mode is :
+```
+$ python3 -m unittest discover tests
+```
+And the command in non-interactive mode is :
+```
+echo "python3 -m unittest discover tests" | bash
+```
+
+## [RESTful API](https://github.com/elodieriou/AirBnB_clone_v3/tree/main/api)
+
+For this part of the project AirBnB clone v3, we have to start our REST API. For doing this, we use Flask.
+The API is used to exchange data between the server and the database doing request.
+
+![image](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2020/9/02078cd7f0573885c85a225c7436584a5afea1f9.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOU5BHMTQX4%2F20220523%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220523T095359Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=3caa4fe94e844264e6dcd2eed977c79096a42eaa5d91f1f1bc69e0f96a2d672b)
+
+## AUTHORS
+
+Rémi Marçais [Github](https://github.com/rmarcais) \
+Elodie Riou [Github](https://github.com/elodieriou)
