@@ -3,8 +3,6 @@
 actions"""
 from flask import jsonify, abort, request
 from models.place import Place
-from models.city import City
-from models.user import User
 from models.amenity import Amenity
 from models import storage
 from api.v1.views import app_views
@@ -12,7 +10,7 @@ from api.v1.views import app_views
 
 @app_views.route('/places/<place_id>/amenities', methods=['GET'],
                  strict_slashes=False)
-def get_amenities(place_id):
+def get_amenity(place_id):
     """Retrieves get method for all amenities"""
     for place in storage.all(Place).values():
         if place.id == place_id:
@@ -25,7 +23,7 @@ def get_amenities(place_id):
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
-def delete_place(place_id, amenity_id):
+def delete_amenities(place_id, amenity_id):
     """ Method that deletes a Amenity object to a place. """
     place = storage.get(Place, place_id)
     if place is None:
@@ -42,7 +40,7 @@ def delete_place(place_id, amenity_id):
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
                  methods=['POST'], strict_slashes=False)
-def post_amenity(place_id, amenity_id):
+def post_amenities(place_id, amenity_id):
     """ Method that links a Amenity object to a Place. """
     place = storage.get(Place, place_id)
     if place is None:
