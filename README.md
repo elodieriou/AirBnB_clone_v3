@@ -2,7 +2,7 @@
 
 ![AirBnB clone logo.](https://github.com/rmarcais/AirBnB_clone_v2/raw/main/img/logo_airbnb.png)
 
-##Introduction
+## Introduction
 
 This project is the first step of a big one witch is to clone the AirBnB full web application.
  * This first step is in python. We will start by implement the parent class called BaseModel.
